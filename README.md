@@ -233,7 +233,7 @@ console.log(cars);
 
 ***
 
-# Day 03
+# [ReactJS Challenge] Day 03
 
 ## 2.0 Setting up the project
 
@@ -254,3 +254,81 @@ console.log(cars);
 ### prop-types
 - prop-types 모듈 설치 필요
 	- `yarn add prop-types`
+
+
+## 2.1 React router part one
+
+### Screens
+- [  ] Home
+- [  ] TV Shows
+- [  ] Search
+- [  ] Detail
+
+### React Router
+- [GitHub - ReactTraining/react-router: Declarative routing for React](https://github.com/ReactTraining/react-router)
+	- [React Router: Declarative Routing for React.js](https://reacttraining.com/react-router/web/guides/quick-start)
+- React App에게 Home에서 시작해야 한다는 걸 알려주기 위한 도구
+- React의 Routing 패키지
+- DOM과 react-native에도 사용 가능함
+- React Router는 컴포넌트 묶음이다.
+
+
+## 2.2 React router part two
+
+### HashRouter
+- url에 해쉬태그가 들어가기 때문에 미관상 보기 좋지 않음
+- `http://localhost:3000/#/home`
+
+### BrowserRouter
+- 일반적인 웹 페이지의 url
+- `http://localhost:3000/home`
+
+### Composition
+- 두 개 이상의 Route를 동시에 랜더링 하는 방식
+```javascript
+export default () => (
+  <Router>
+    <Route path="/" exact component={Home} />
+    <Route path="/tv" component={TV} />
+    <Route path="/tv/popular" render={() => <h1>popular</h1>} />
+    <Route path="/search" component={Search} />
+  </Router>
+);
+```
+<img src="/images/composition.png">
+
+
+### Redirect
+- `<Redirect from=“*” to=“/“ />`
+- 해당되는 페이지만 렌더링 되도록 함.
+	- But, 경로가 겹치게 되어서 에러가 나는데 그래서 `Switch`를 사용해야 함.
+
+### Switch
+- 한 번에 오직 하나의 Route만 랜더링 할 수 있게 함.
+```javascript
+// Router.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import Home from 'Routes/Home';
+import TV from 'Routes/TV';
+import Search from 'Routes/Search';
+
+export default () => (
+  <Router>
+    <Switch> // <- Switch
+      <Route path="/" exact component={Home} />
+      <Route path="/tv" component={TV} />
+      <Route path="/tv/popular" render={() => <h1>popular</h1>} />
+      <Route path="/search" component={Search} />
+      <Redirect from="*" to="/" /> // <- Redirect
+    </Switch>
+  </Router>
+);
+```
+
+### exact
+- 주어진 경로와 정확히 동일할 때 설정한 컴포넌트를 보여줌.
+
+
+### 참고자료
+- [react-router :: 1장. 리액트 라우터 사용해보기 | VELOPERT.LOG](https://velopert.com/3417)
