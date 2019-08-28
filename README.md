@@ -234,3 +234,23 @@ console.log(cars);
 ***
 
 # Day 03
+
+## 2.0 Setting up the project
+
+### create-react-app
+- yarn 또는 npm을 사용
+	- `yarn global add create-react-app`
+- 간편하게 react를 시작할 수 있게 해주는 모듈
+	- `create-react-app`
+- 컴퓨터에 저장하기 때문에 매번 버전 확인 및 업데이트를 해야한다는 번거로움이 있음.
+
+### npx
+- 앞의 경우를  보완한 것이 npx를 통한 설치
+	-  `yarn global add npx` or `npm i npx -g`
+- 이것 또한 모듈이지만, 컴퓨터에 저장할 필요가 없음.
+- 항상 최신 버전의 create-react-app을 받아서 실행한 뒤, 끝나면 삭제 됨
+	- `npx create-react-app`
+
+### prop-types
+- prop-types 모듈 설치 필요
+	- `yarn add prop-types`
