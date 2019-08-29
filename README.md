@@ -546,3 +546,93 @@ class App extends Component {
 
 export default App;
 ```
+
+<br />
+
+## 3.4 Location Aware Header
+
+- 선택된 Header의 border에만 컬러링
+- 해당 요소에 props를 줌
+
+```javascript
+const Item = styled.li`
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-bottom: 5px solid ${props => props.current ? 'deeppink' : 'transparent'};
+`;
+```
+
+- props로 현재 선택된 Header의 Router를 전달해야 함
+	- 이때 `withRouter`을 사용. 이것은 컴포넌트를 감싸는 또 다른 컴포넌트의 개념.
+	- Router에 대한 정보를 줌.
+	- `import { Link, withRouter } from ‘react-router-dom’;`
+	- 아래와 같은 형식으로 withRouter로 기존의 컴포넌트를 감싼다.
+
+```javascript
+const HeaderC = (props) => (
+    <Header>
+      {console.log(props)}
+      <List>
+        <Item current={false}>
+          <SLink to="/">Movies</SLink>
+        </Item>
+        <Item current={true}>
+          <SLink to="/tv">TV</SLink>
+        </Item>
+        <Item current={false}>
+          <SLink to="/search">Search</SLink>
+        </Item>
+      </List>
+    </Header>
+);
+
+export default withRouter(HeaderC);
+```
+
+- 위와 동일한 내용을 다른 형식으로 작성
+
+```javascript
+export default withRouter(props => (
+    <Header>
+      {console.log(props)}
+      <List>
+        <Item current={false}>
+          <SLink to="/">Movies</SLink>
+        </Item>
+        <Item current={true}>
+          <SLink to="/tv">TV</SLink>
+        </Item>
+        <Item current={false}>
+          <SLink to="/search">Search</SLink>
+        </Item>
+      </List>
+    </Header>
+));
+```
+
+- console.log를 찍어보면 아래와 같이 props를 얻을 수 있음.
+<img src="/images/withRouter-props.png">
+- 여기서 필요한 것은 pathname
+	- `{ location: { pathname } }`
+
+- 최종적으로 아래와 같이 pathname의 확인 결과가 boolean으로 나올 수 있도록 작성하면 선택한 요소에만 border 색상이 들어감.
+
+```javascript
+export default withRouter(({ location: { pathname } }) => (
+    <Header>
+      <List>
+        <Item current={pathname === ‘/‘}>
+          <SLink to='/'>Movies</SLink>
+        </Item>
+        <Item current={pathname === ‘/tv’}>
+          <SLink to='/tv'>TV</SLink>
+        </Item>
+        <Item current={pathname === ‘/search’}>
+          <SLink to='/search'>Search</SLink>
+        </Item>
+      </List>
+    </Header>
+));
+```
+***
