@@ -1,6 +1,17 @@
 # React based movie app with Nomad Coders
 
-# Day 01
+## INDEX
+<ul>
+  <li><a href="#day01">DAY 01</a></li>
+  <li><a href="#day02">DAY 02</a></li>
+  <li><a href="#day03">DAY 03</a></li>
+  <li><a href="#day04">DAY 04</a></li>
+</ul>
+
+***
+
+<h1 id="day01">DAY 01</h1>
+
 ## 1.1 Arrow Function
 
 - ES6에서 새롭게 추가된 기능
@@ -139,7 +150,8 @@ console.log(yourPhone.ringRing(), yourPhone.intro());
 
 ***
 
-# Day 02
+<h1 id="day02">DAY 02</h1>
+
 ## 1.6 Array.map
 
 - API로부터 배열로 된 데이터를 받게 되기 때문에 배열 메서드는 중요함
@@ -233,7 +245,7 @@ console.log(cars);
 
 ***
 
-# Day 03
+<h1 id="day03">DAY 03</h1>
 
 ## 2.0 Setting up the project
 
@@ -259,10 +271,11 @@ console.log(cars);
 ## 2.1 React router part one
 
 ### Screens
-- [  ] Home
-- [  ] TV Shows
-- [  ] Search
-- [  ] Detail
+
+- [ ] Home
+- [ ] TV Shows
+- [ ] Search
+- [ ] Detail
 
 ### React Router
 - [GitHub - ReactTraining/react-router: Declarative routing for React](https://github.com/ReactTraining/react-router)
@@ -335,7 +348,7 @@ export default () => (
 
 ***
 
-# Day 04
+<h1 id="day04">DAY 04</h1>
 
 ## 3.0 CSS in React part One
 
