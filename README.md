@@ -395,7 +395,7 @@ export default () => (
 ```
 
 - class명이 랜덤으로 생성됨.
-[image:CDF24F5D-6760-475A-B9EC-F85FD7DB779A-1571-00003A1841E9BFA1/8355663D-E10F-4EE3-ADAD-69ED147083F5.png]
+<img src="/images/random-class.png">
 
 - `yarn add node-sass` 설치 후 아래와 같이 작성할 수도 있음.
 ```scss
@@ -454,18 +454,21 @@ export default () => (
 ```
 
 <br/>
+
 ### Link
+
 - `<a></a>`태그를 사용하면 링크로 이동할 때마다 뷰를 다시 렌더링 하는데, 굉장히 비효율적이다.
 - 따라서, React에서는 `Link`라는 기능을 사용함.
-	- `import { Link } from 'react-router-dom';`
-	- 동일한 페이지에 있을 경우 해당 요소만 교체하는 방식
+  - `import { Link } from 'react-router-dom';`
+  - 동일한 페이지에 있을 경우 해당 요소만 교체하는 방식
 - 이 경우에는 아래와 같이 styled-components를 적용
-	- `const SLink = styled(Link)``;`
+  - `const SLink = styled(Link)``;`
 - Link는 Router 밖에서 사용할 수 없으므로 아래와 같은 형식의 문장 구조를 이룸
+
 ```javascript
 export default () => (
   <Router>
-	  <>
+    <>
       <Header /> // <- here
       <Switch>
         <Route path="/" exact component={Home} />
@@ -474,11 +477,10 @@ export default () => (
         <Route path="/search" component={Search} />
         <Redirect from*="*" to="/" />
       </Switch>
-	  </>
+    </>
   </Router>
 );
 ```
-***
 
 <br/>
 ## 3.3 GlobalStyles and Header
