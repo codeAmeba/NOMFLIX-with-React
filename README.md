@@ -492,3 +492,57 @@ export default () => (
 <br/>
 
 ## 3.3 GlobalStyles and Header
+
+### Global style 적용
+
+- 글로벌로 설정하는 이유는 해당 사이트의 폰트를 설정하거나, styled-components를 설치하거나 하는 등의 작업 때문.
+- 우선 `yarn add styled-reset`
+- [GitHub - zacanger/styled-reset: Eric Meyer’s Reset CSS for styled-components](https://github.com/zacanger/styled-reset)
+- styled-reset은 SC를 이용하여 CSS초기화 한 뒤 0의 상태에서 시작할 수 있게 해줌.
+- GlobalStyles.js 파일 생성
+
+**src - Components - GlobalStyles.js**
+
+```javascript
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+
+const globalStyles = createGlobalStyle`
+  ${reset};
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    background-color: rgba(20, 20, 20, 1);
+  }
+`;
+
+export default globalStyles;
+```
+
+**src - Components - App.js**
+
+```javascript
+import React, { Component } from 'react';
+import Router from 'Components/Router';
+import GlobalStyles from './GlobalStyles';
+
+class App extends Component {
+  render() {
+    return (
+      <>
+        <Router />
+        <GlobalStyles />
+      </>
+    );
+  }
+}
+
+export default App;
+```
