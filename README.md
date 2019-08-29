@@ -612,9 +612,11 @@ export default withRouter(props => (
 ```
 
 - console.log를 찍어보면 아래와 같이 props를 얻을 수 있음.
+
 <img src="/images/withRouter-props.png">
+
 - 여기서 필요한 것은 pathname
-	- `{ location: { pathname } }`
+  - `{ location: { pathname } }`
 
 - 최종적으로 아래와 같이 pathname의 확인 결과가 boolean으로 나올 수 있도록 작성하면 선택한 요소에만 border 색상이 들어감.
 
