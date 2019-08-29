@@ -233,7 +233,7 @@ console.log(cars);
 
 ***
 
-# [ReactJS Challenge] Day 03
+# Day 03
 
 ## 2.0 Setting up the project
 
@@ -335,7 +335,7 @@ export default () => (
 
 ***
 
-# [ReactJS Challenge] Day 04
+# Day 04
 
 ## 3.0 CSS in React part One
 

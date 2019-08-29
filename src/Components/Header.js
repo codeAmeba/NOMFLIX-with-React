@@ -19,7 +19,7 @@ export default () => (
     <Header>
       <List>
         <Item>
-          <SLink to="/">Home</SLink>
+          <SLink to="/">Movies</SLink>
         </Item>
         <Item>
           <SLink to="/tv">TV</SLink>
