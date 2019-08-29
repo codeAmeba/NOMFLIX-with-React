@@ -332,3 +332,64 @@ export default () => (
 
 ### 참고자료
 - [react-router :: 1장. 리액트 라우터 사용해보기 | VELOPERT.LOG](https://velopert.com/3417)
+
+***
+
+#  [ReactJS Challenge] Day 04
+
+## 3.0 CSS in React part One
+
+### 리액트에서 CSS를 적용하는 방법 01
+- styles.css 파일을 만들어서 스타일 적용
+- CSS를 적용할 요소에 className으로 클래스명 적어야 함
+- 최상위 파일(index.js)에 import 
+	- `import 'styles.css';`
+- 나쁜 방법은 아니나, 컴포넌트와 CSS가 분리되어 있다는 게 단점.
+	- 컴포넌트를 쓰는 가장 큰 이유는 캡슐화(Encapulation)에 있다.
+
+<br />
+### 리액트에서 CSS를 적용하는 방법 02
+- 기능별로 별도 컴포넌트를 생성
+- 각 컴포넌트마다 CSS 파일의 생성 및 적용
+- 이 방법에도 단점은 있음
+	- 첫째, CSS 파일을 생성해야 된다는 점.
+	- 둘째, 사용할 때마다 import를 해야 한다는 점.
+	- 셋째, className을 기억해야 한다는 점.(CSS는 Global로 작동하기 때문)
+
+<br />
+## 3.1 CSS in React part Two
+### 리액트에서 CSS를 적용하는 방법 03
+- CSS를 컴포넌트 스코프에서 작동하도록 하는 방법.
+- CSS 모듈이라고 부름.
+- className을 임의화해서 local로 작동하게 함.
+
+**src - Components - Header - Header.module.css**
+```css
+.navList {
+  display: flex;
+}
+```
+
+- CSS 파일명을 `Header.module.css` 방식으로 변경
+- import는 자바스크립트와 같은 방식
+	- `import styles from ‘./Header.module.css’;`
+- className을 자바스크립트의 객체처럼 사용함.
+
+**src - Components - Header - Header.js**
+```javascript
+export default () => (
+    <header>
+      <ul className={styles.navList}> // <- like this
+        <li>
+          <a href="/a">Home</a>
+        </li>
+        <li>
+          <a href="/tv">TV</a>
+        </li>
+        <li>
+          <a href="/search">Search</a>
+        </li>
+      </ul>
+    </header>
+);
+```
