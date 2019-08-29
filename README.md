@@ -335,11 +335,12 @@ export default () => (
 
 ***
 
-#  [ReactJS Challenge] Day 04
+# [ReactJS Challenge] Day 04
 
 ## 3.0 CSS in React part One
 
 ### 리액트에서 CSS를 적용하는 방법 01
+
 - styles.css 파일을 만들어서 스타일 적용
 - CSS를 적용할 요소에 className으로 클래스명 적어야 함
 - 최상위 파일(index.js)에 import 
@@ -348,6 +349,7 @@ export default () => (
 	- 컴포넌트를 쓰는 가장 큰 이유는 캡슐화(Encapulation)에 있다.
 
 <br />
+
 ### 리액트에서 CSS를 적용하는 방법 02
 - 기능별로 별도 컴포넌트를 생성
 - 각 컴포넌트마다 CSS 파일의 생성 및 적용
@@ -357,13 +359,17 @@ export default () => (
 	- 셋째, className을 기억해야 한다는 점.(CSS는 Global로 작동하기 때문)
 
 <br />
+
 ## 3.1 CSS in React part Two
+
 ### 리액트에서 CSS를 적용하는 방법 03
+
 - CSS를 컴포넌트 스코프에서 작동하도록 하는 방법.
 - CSS 모듈이라고 부름.
 - className을 임의화해서 local로 작동하게 함.
 
 **src - Components - Header - Header.module.css**
+
 ```css
 .navList {
   display: flex;
@@ -411,6 +417,7 @@ export default () => (
 - 여전히 JS와 CSS가 동떨어져 있다는 느낌을 지울 수가 없다. 둘을 하나의 파일에서 쓸 수 있는 방법은 없을까?
 
 <br/>
+
 ## 3.2 CSS in React part Three
 
 ### 리액트에서 CSS를 적용하는 방법 04
@@ -483,5 +490,5 @@ export default () => (
 ```
 
 <br/>
-## 3.3 GlobalStyles and Header
 
+## 3.3 GlobalStyles and Header
