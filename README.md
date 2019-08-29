@@ -393,3 +393,93 @@ export default () => (
     </header>
 );
 ```
+
+- class명이 랜덤으로 생성됨.
+[image:CDF24F5D-6760-475A-B9EC-F85FD7DB779A-1571-00003A1841E9BFA1/8355663D-E10F-4EE3-ADAD-69ED147083F5.png]
+
+- `yarn add node-sass` 설치 후 아래와 같이 작성할 수도 있음.
+```scss
+.navList {
+  display: flex;
+  &:hover {
+    background-color: deeppink;
+  }
+}
+```
+
+- 이러한 모듈 방식도 괜찮기는 하지만 className을 기억해야 한다는 점이 마음에 들지 않음.
+- 여전히 JS와 CSS가 동떨어져 있다는 느낌을 지울 수가 없다. 둘을 하나의 파일에서 쓸 수 있는 방법은 없을까?
+
+<br/>
+## 3.2 CSS in React part Three
+
+### 리액트에서 CSS를 적용하는 방법 04
+- JS를 이용한 니코의 최애 방법은 **styled-components**
+- 우선 설치가 필요함
+	- `yarn add styled-components`
+- 설치 후 import
+	- `import styled from 'styled-components'`
+
+> TIP) 
+> **vscode-styled-components** 확장 프로그램을 설치하면 텍스트에 색상이 들어감.
+
+- styled-component 작성 후 아래와 같이 태그로 사용
+	- **src - Components - Header.js**
+```javascript
+import React from 'react';
+import styled from 'styled-components';
+
+const List = styled.ul`
+  display: flex;
+  &:hover {
+    background-color: deeppink;
+  }
+`;
+
+export default () => (
+    <header>
+      <List> // <- here
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/tv">TV</a>
+        </li>
+        <li>
+          <a href="/search">Search</a>
+        </li>
+      </List> // <- here
+    </header>
+);
+```
+
+<br/>
+### Link
+- `<a></a>`태그를 사용하면 링크로 이동할 때마다 뷰를 다시 렌더링 하는데, 굉장히 비효율적이다.
+- 따라서, React에서는 `Link`라는 기능을 사용함.
+	- `import { Link } from 'react-router-dom';`
+	- 동일한 페이지에 있을 경우 해당 요소만 교체하는 방식
+- 이 경우에는 아래와 같이 styled-components를 적용
+	- `const SLink = styled(Link)``;`
+- Link는 Router 밖에서 사용할 수 없으므로 아래와 같은 형식의 문장 구조를 이룸
+```javascript
+export default () => (
+  <Router>
+	  <>
+      <Header /> // <- here
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/tv" exact component={TV} />
+        <Route path="/tv/popular" render={() => <h1>popular</h1>} />
+        <Route path="/search" component={Search} />
+        <Redirect from*="*" to="/" />
+      </Switch>
+	  </>
+  </Router>
+);
+```
+***
+
+<br/>
+## 3.3 GlobalStyles and Header
+
