@@ -6,6 +6,7 @@
   <li><a href="#day02">DAY 02</a></li>
   <li><a href="#day03">DAY 03</a></li>
   <li><a href="#day04">DAY 04</a></li>
+  <li><a href="#day05">DAY 05</a></li>
 </ul>
 
 ***
@@ -652,7 +653,7 @@ export default withRouter(({ location: { pathname } }) => (
 ```
 ***
 
-# [ReactJS Challenge] Day 05
+<h1 id="day05">DAY 05</h1>
 
 ## 4.0 Introduction to The Movie DB API
 
