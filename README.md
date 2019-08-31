@@ -669,11 +669,12 @@ export default withRouter(({ location: { pathname } }) => (
 
 ### API Verbs
 
-- [ ] Now playing (Movie
-- [ ] Top Rated (TV, Movie)
-- [ ] Popular (TV, Movie)
-- [ ] Upcoming (Movie)
-- [ ] Airing Today (TV)
+- [x] Now playing (Movie)
+- [x] Upcoming (Movie)
+- [x] Top Rated (TV)
+- [x] Popular (TV, X)
+- [x] Airing Today (TV)
+
 
 <br />
 
@@ -733,3 +734,109 @@ export default api;
 <br />
 
 ## 4.2 API Verbs part One
+
+### API Verbs
+
+- [x] Now playing (Movie)
+- [x] Upcoming (Movie)
+- [x] Top Rated (TV)
+- [x] Popular (TV, X)
+- [x] Airing Today (TV)
+- [ ] TV Show Detail
+- [ ] Movie Detail
+
+- TV와 Movies 각각의 api 요청
+
+```javascript
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/',
+  params: {
+    api_key: 'b8e07a1bc39775b44d7ad690b461e764',
+    language: 'en-US'
+  }
+});
+
+export const MoviesApi = {
+  nowPlaying: () => api.get('movie/now_playing'),
+  upcoming: () => api.get('movie/upcoming'),
+  popluar: () => api.get('movie/popular')
+}
+
+export const TvApi = {
+  topRated: () => api.get('tv/top_rated'),
+  popular: () => api.get('tv/popular'),
+  airingToday: () => api.get('tv/airing_today')
+}
+```
+
+- fetch 방식의 api 요청에 비해 훨씬 간결하고 가독성이 좋음.
+- axios 짱짱맨
+
+<br/>
+
+## 4.3 API Verbs part Two
+***
+- Movie Detail을 가져오기 위해 id가 필요함
+	- `movie/{movie_id}`
+
+<br/>
+
+### API Verbs
+- [x] Now playing (Movie)
+- [x] Upcoming (Movie)
+- [x] Top Rated (TV)
+- [x] Popular (TV, X)
+- [x] Airing Today (TV)
+- [x] TV Show Detail
+- [x] Movie Detail
+- [x] Search  (Movie, TV)
+
+<br/>
+
+### append_to_response
+
+- api에서 지원하는 기능
+- [API Docs](https://developers.themoviedb.org/3/getting-started/append-to-response)
+- video나 image같은 것들을 덧붙이기(append)하면 포스터나 예고편 등으로 출력이 된다.
+
+```javascript
+export const MoviesApi = {
+  nowPlaying: () => api.get('movie/now_playing'),
+  upcoming: () => api.get('movie/upcoming'),
+  popluar: () => api.get('movie/popular'),
+  movieDetail: id => api.get(`movie/${id}`, {
+    params: {
+      appent_to_response: 'videos'
+    }
+  })
+};
+```
+
+### Search
+- search 기능은 url 외에도 검색어에 해당하는 파라미터가 추가로 필요함
+
+<img src="api-search.png">
+
+```javascript
+  search: (term) => api.get('search/movie', {
+    params: {
+      query: term
+    }
+  })
+```
+
+- 그리고 api의 명세를 잘 찾아보면 아래와 같이 요구사항이 설명되어 있음.
+- 이 경우에는 URI로 인코딩이 필요하다고 함.
+
+<img src="api-search2.png">
+
+- 따라서 아래와 같이 encodeURIComponent를 사용하면 값을 인코팅하고 그 문자열로 검색을 하게 됨.
+```javascript
+  search: (term) => api.get('search/movie', {
+    params: {
+      query: encodeURIComponent(term)
+    }
+  })
+```
