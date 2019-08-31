@@ -651,3 +651,84 @@ export default withRouter(({ location: { pathname } }) => (
 ));
 ```
 ***
+
+# [ReactJS Challenge] Day 05
+
+## 4.0 Introduction to The Movie DB API
+
+- 데이터가 오는 곳이 API(Application Programming Interface)
+- Nomflix에서는 the movie db를 이용함(가입 필요).
+  - [https://www.themoviedb.org/](https://www.themoviedb.org/) 
+- setting -> API -> API KEY copy
+
+<br />
+
+## 4.1 Sexy Networking with Axios Instances
+
+
+### API Verbs
+
+- [ ] Now playing (Movie
+- [ ] Top Rated (TV, Movie)
+- [ ] Popular (TV, Movie)
+- [ ] Upcoming (Movie)
+- [ ] Airing Today (TV)
+
+<br />
+
+### 요청 방식
+
+- 이전 강의들에서는 주로 fetch를 썼음
+	- 라우터에서 호출하고, fetch 하고, 나머지 모든 작업들을 하는 방식인데 효율적이지 않음.
+	- 왜냐하면 url의 동일한 내용이 반복되기 때문
+	- 따라서 네트워킹과 API만 다루는 별도의 파일을 따로 만들고 호출할 것
+	- 또한, fetch가 아닌, axios를 사용
+
+<br />
+
+### Axios
+
+- [GitHub - axios/axios: Promise based HTTP client for the browser and node.js](https://github.com/axios/axios)
+- 별도 모듈 설치 필요
+	- `yarn add axios`
+- axios의 장점은, 직접 인스턴스를 configure(설정)할 수 있다는 점.
+
+**axios.create([config])**
+
+```javascript
+const instance = axios.create({
+  baseURL: 'https://some-domain.com/api/',
+  timeout: 1000,
+  headers: {'X-Custom-Header': 'foobar'}
+});
+```
+
+- 위의 axios.create를 통해 반복을 최소화 할 수 있음.
+  - parameter에 api_key와 language 전달
+
+```javascript
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/',
+  params: {
+    api_key: 'b8e07a1bc39775b44d7ad690b461e764',
+    language: 'en-US'
+  }
+});
+
+api.get('tv/popular');
+
+export default api;
+```
+
+- index.js에 api.js를 import하고 실행해보면 아래와 같이 데이터가 들어오는 것을 확인할 수 있음.
+- 주의) api.get에서 `tv/popular`로 작성해야 상대경로로 접근함
+  - `/tv/popular`로 작성하면 절대경로가 됨
+
+<img src="/images/api-response.png">
+<img src="/images/api-response2.png">
+
+<br />
+
+## 4.2 API Verbs part One
