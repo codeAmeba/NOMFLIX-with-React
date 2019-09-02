@@ -25,7 +25,7 @@ const Item = styled.li`
   width: 50px;
   height: 50px;
   text-align: center;
-  border-bottom: 3px solid ${props => (props.current ? 'deeppink' : 'transparent')};
+  border-bottom: 3px solid ${props => (props.current ? '#E50914' : 'transparent')};
   transition: border-bottom .5s ease-in-out;
 `;
 

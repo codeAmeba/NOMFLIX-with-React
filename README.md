@@ -840,3 +840,238 @@ export const MoviesApi = {
     }
   })
 ```
+
+***
+
+
+<h1 id="day06">DAY 06</h1>
+
+## 5.0 Container Presenter Pattern part One
+
+- Container Presenter Pattern에서 컨테이너는 data와 state를 지니고, api를 불러온다. 그리고 모든 로직을 처리.
+- 그 다음, 프레젠터가 그 data들을 보여주는 역할.(프레젠터에는 state가 없고, api도 모르며 클래스도 없고 단지 함수형 컴포넌트)
+- 쉽게 말해서 프레젠터는 ‘스타일’, 컨테이너는 ‘데이터’
+
+<br />
+
+### 각 컨테이너별 폴더를 따로 구성
+
+- 폴더마다 index.js가 있어야 함. 컨테이너를 export해야 하기 때문.
+- 이렇게 정리하는 게 혼란을 줄일 수 있음.
+- index.js가 HomeContainer를 import / export하는 역할을 하고
+- HomeContainer는 state를 가진 모든 리액트 컴포넌트가 된다.
+
+**src - Routes - Home - HomeContainer.js**
+```javascript
+import React from 'react';
+import HomePresenter from './HomePresenter';
+
+export default class extends React.Component {
+  state = {
+    nowPlaying: null,
+    upcoming: null,
+    popular: null,
+    error: null,
+    loading: true
+  };
+
+  render() {
+    const { nowPlaying, upcoming, popular, error, loading } = this.state;
+    return (
+      <HomePresenter 
+        nowPlaying={nowPlaying} 
+        upcoming={upcoming} 
+        popular={popular} 
+        error={error}
+        loading={loading}
+      />
+    );
+  }
+}
+```
+
+<br />
+
+## 5.1 Container Presenter Pattern part Two
+
+- search container는 **상호작용**이 필요하기 때문에 조금 까다로움
+- loading의 경우 기본값은 false
+  - 유저가 아무런 행동을 취하지 않았는데 로딩이 되면 안 되니까
+
+```javascript
+import React from 'react';
+import SearchPresenter from './SearchPresenter';
+
+export default class extends React.Component {
+  state = {
+    MovieResults: null,
+    TvResults: null,
+    SearchTerm: '',
+    error: null,
+    loading: false
+  }
+
+  render() {
+    const { MovieResults, TvResults, SearchTerm, error, loading } = this.state;
+    return (
+      <SearchPresenter 
+        MovieResults={MovieResults}
+        TvResults={TvResults}
+        SearchTerm={SearchTerm}
+        error={error}
+        loading={loading}
+      />
+    );
+  }
+}
+```
+
+<br />
+
+## 5.2 Home Container
+
+- 두 가지 옵션이 있음
+	- componentDidMount()를 통해 전체 api 요청을 할 수 있고
+	- 각각의 요청을 분리된 함수로 따로 요청할 수도 있음.
+		- ex) getNowPlaying(), getUpComing() 등등
+
+- 이번 경우엔 굳이 분리할 필요가 없으므로 componentDidMount()를 사용함
+
+<br />
+
+### try - catch
+
+- try가 먼저 실행되고, 작동하지 않으면 error를 catch 한다.
+
+<br />
+
+### async / await
+
+- 준비가 될 때까지 기다려달라는 의미
+- 예를 들어 아래와 같은 상황에서 async/await이 없으면, nowPlaying 데이터를 가져오기 시작한다. 하지만 api가 리턴할 때까지 자바스크립트는 기다려주지 않음.
+
+```javascript
+  async componentDidMount() {
+    try {
+      await MoviesApi.nowPlaying();
+    } catch {
+      this.setState({
+        error: "Can't find movis information."
+      });
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+```
+
+- 하지만, async/await을 쓰면 데이터가 준비될 때까지 자바스크립트가 기다려줌.
+
+<br />
+
+### 비구조화 할당
+
+- 변수명에 data를 정할 때 비구조화 할당을 쓰면 보기 좋음
+
+```javascript
+  async componentDidMount() {
+    try {
+      const { data: { results: nowPlaying }} = *await* MoviesApi.nowPlaying();
+      console.log(nowPlaying);
+    } catch {
+      this.setState({
+        error: "Aw, Snap!"
+      });
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+```
+
+<br />
+
+## 5.3 TV Container
+
+- Movies와 동일
+
+<br />
+
+## 5.4 Search Container
+
+- 모든 로직을 갖는다.
+- 첫 번째 로직은 handleSubmit
+	- 입력 폼에 text를 입력한 뒤 엔터키를 누르면 Submit이 됨
+	- searchTerm이 공백이 아닌지 체크하고 search 함수를 실행할 것
+- 특히 try는 다른 컨테이너와 다름
+	- 검색을 시도했을 때 로딩을 true로 만든다(기본값은 false).
+
+```javascript
+  handleSubmit = () => {
+    const { searchTerm } = this.state;
+    if (searchTerm !== '') {
+      this.searchByTerm();
+    }
+  };
+
+  searchByTerm = async() => {
+    const { searchTerm } = this.state;
+    try {
+      const { data: { results: movieResults }} = await MoviesApi.search(searchTerm);
+      const { data: { results: tvResults }} = await TvApi.search(searchTerm);
+      this.setState({
+        movieResults,
+        tvResults
+      })
+      this.setState({
+        loading: true
+      })
+    } catch {
+      this.setState({
+        error: "Can't find results."
+      });
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  };
+```
+
+<br />
+
+## 5.5 Detail Container part One
+
+- Router Component에 Detail을 추가해야 함.
+- Movie나 TV의 id를 가져와서 보여주는 방식
+
+```javascript
+export default () => (
+  <Router>
+    <>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/tv" component={TV} />
+        <Route path="/search" component={Search} />
+        <Route path="/movie/:id" component={Detail} />
+        <Route path="/tv/:id" component={Detail} />
+        <Redirect from="*" to="/" />
+      </Switch>
+    </>
+  </Router>
+);
+```
+
+- `:id`는 해당 위치는 랜덤한 id가 올 수 있음을 의미
+- id는 url에서 가져올 예정
+- Header component는 라우터의 위치를 알고 있음.
+	- withRouter로 감쌌기 때문에
+
+
+<br />
+
+## 5.6 Detail Container part Two
+

@@ -13,12 +13,17 @@ export default class extends React.Component {
 
   async componentDidMount() {
     try {
-      const {data: {results: nowPlaying }} = await MoviesApi.nowPlaying();
-      console.log(nowPlaying);
-
+      const { data: { results: nowPlaying }} = await MoviesApi.nowPlaying();
+      const { data: { results: upcoming }} = await MoviesApi.upcoming();
+      const { data: {results: popular }} = await MoviesApi.popular();
+      this.setState({
+        nowPlaying,
+        upcoming,
+        popular
+      });
     } catch {
       this.setState({
-        error: "Can't find movis information."
+        error: "Can't find Movie."
       });
     } finally {
       this.setState({
