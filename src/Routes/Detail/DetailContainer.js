@@ -9,8 +9,12 @@ export default class extends React.Component {
   }
 
   async componentDidMount() {
-    const { match: { params: { id }}} = this.props;
-    console.log(id);
+    const { match: { params: { id }}, history: { push }, location: { pathname }} = this.props;
+    this.isMovie = pathname.includes('/movie/');
+    const parseId = parseInt(id);
+    if(isNaN(parseId)) {
+      return push('/');
+    }
 
   }
 
